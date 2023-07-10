@@ -8,7 +8,8 @@ import * as FileSaver from "file-saver";
 import styles from "./page.module.css";
 
 export default function Page() {
-	let avatarRef: Avatar | null = null;
+	// let avatarRef: Avatar | null = null;
+	let avatarRef: any = useRef(null);
 	let canvasRef: HTMLCanvasElement | null = null;
 
 	const [optionSelected, setOptionSelected] = useState("skin");
@@ -174,15 +175,12 @@ export default function Page() {
 	};
 
 	const triggerDownload = (imageBlob: Blob, fileName: string) => {
-		console.log("saving img...");
 		FileSaver.saveAs(imageBlob, fileName);
 	};
 
 	const download = () => {
-		console.log("download");
-		console.log(avatarRef);
-
-		const svgNode = ReactDOM.findDOMNode(avatarRef!)! as Element;
+		// const svgNode = ReactDOM.findDOMNode(avatarRef!)! as Element;
+		let svgNode = document.getElementsByTagName("svg")[0] as Element
 		const canvas = canvasRef!;
 		const ctx = canvas.getContext("2d")!;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -194,10 +192,9 @@ export default function Page() {
 		const img = new Image();
 		const svg = new Blob([data], { type: "image/svg+xml" });
 		const url = DOMURL.createObjectURL(svg);
-		console.log(svgNode);
-		console.log(ctx);
-		console.log(url);
 
+		// console.log(svgNode);
+		
 		img.onload = () => {
 			ctx.save();
 			ctx.scale(2, 2);
@@ -205,7 +202,6 @@ export default function Page() {
 			ctx.restore();
 			DOMURL.revokeObjectURL(url);
 			canvasRef!.toBlob((imageBlob) => {
-				console.log("imgBlob", imageBlob);
 				triggerDownload(imageBlob!, "avataaars.png");
 			});
 		};
@@ -220,13 +216,19 @@ export default function Page() {
 		canvasRef = ref;
 	};
 
+	useEffect(() => {
+		const test = avatarRef.current;
+		console.log(test)
+	}, [])
+
 	return (
 		<div className={styles.main}>
 			<div className={styles.mainContainer}>
 				<div className={styles.avatarContainer}>
 					<Avatar
 						// style={{ width: "100px", height: "100px" }}
-						ref={createAvatarRef}
+						// ref={createAvatarRef}
+						ref={avatarRef}
 						avatarStyle="Circle"
 						topType={hair}
 						accessoriesType={accessories}
