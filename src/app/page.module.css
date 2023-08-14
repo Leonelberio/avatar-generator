@@ -85,7 +85,8 @@
 	align-items: center;
 	width: 100vw;
 	height: 25vh;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .piece {
@@ -117,6 +118,12 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.pieceEyesBorder {
+	border: 1px solid #47bc9d;
+	border-radius: 4px;
+	margin: 5px;
 }
 
 .selectContainer {

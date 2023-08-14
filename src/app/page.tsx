@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import Avatar from "avataaars";
 import { Piece } from "avataaars";
 import * as FileSaver from "file-saver";
+import axios from "axios"
 import styles from "./page.module.css";
 
 export default function Page() {
@@ -174,7 +175,10 @@ export default function Page() {
 		setMouth(mouthTypes[randomNumber(0, mouthTypes.length - 1)]);
 	};
 
-	const triggerDownload = (imageBlob: Blob, fileName: string) => {
+	const triggerDownload = async(imageBlob: Blob, fileName: string) => {
+		const bodyFormData = new FormData();
+		bodyFormData.append('images', imageBlob);
+		
 		FileSaver.saveAs(imageBlob, fileName);
 	};
 
@@ -226,7 +230,7 @@ export default function Page() {
 			<div className={styles.mainContainer}>
 				<div className={styles.avatarContainer}>
 					<Avatar
-						// style={{ width: "100px", height: "100px" }}
+						style={{ width: '100%', maxHeight:'35vh' }}
 						// ref={createAvatarRef}
 						ref={avatarRef}
 						avatarStyle="Circle"
@@ -417,17 +421,19 @@ export default function Page() {
 						<div className={styles.customizePreview}>
 							{eyesTypes.map((type, index) => {
 								return (
-									<div
-										className={styles.pieceEyes}
-										onClick={() => setEyes(type)}
-										key={index}
-									>
-										<Piece
-											avatarStyle="Circle"
-											pieceType="eyes"
-											pieceSize="100"
-											eyeType={type}
-										/>
+									<div className={styles.pieceEyesBorder}>
+										<div
+											className={styles.pieceEyes}
+											onClick={() => setEyes(type)}
+											key={index}
+										>
+											<Piece
+												avatarStyle="Circle"
+												pieceType="eyes"
+												pieceSize="125"
+												eyeType={type}
+											/>
+										</div>
 									</div>
 								);
 							})}
@@ -437,17 +443,19 @@ export default function Page() {
 						<div className={styles.customizePreview}>
 							{eyebrowTypes.map((type, index) => {
 								return (
-									<div
-										className={styles.pieceEyes}
-										onClick={() => setEyebrow(type)}
-										key={index}
-									>
-										<Piece
-											avatarStyle="Circle"
-											pieceType="eyebrows"
-											pieceSize="100"
-											eyebrowType={type}
-										/>
+									<div className={styles.pieceEyesBorder}>
+										<div
+											className={styles.pieceEyes}
+											onClick={() => setEyebrow(type)}
+											key={index}
+										>
+											<Piece
+												avatarStyle="Circle"
+												pieceType="eyebrows"
+												pieceSize="125"
+												eyebrowType={type}
+											/>
+										</div>
 									</div>
 								);
 							})}
@@ -457,17 +465,19 @@ export default function Page() {
 						<div className={styles.customizePreview}>
 							{mouthTypes.map((type, index) => {
 								return (
-									<div
-										className={styles.pieceEyes}
-										onClick={() => setMouth(type)}
-										key={index}
-									>
-										<Piece
-											avatarStyle="Circle"
-											pieceType="mouth"
-											pieceSize="100"
-											mouthType={type}
-										/>
+									<div className={styles.pieceEyesBorder}>
+										<div
+											className={styles.pieceEyes}
+											onClick={() => setMouth(type)}
+											key={index}
+										>
+											<Piece
+												avatarStyle="Circle"
+												pieceType="mouth"
+												pieceSize="125"
+												mouthType={type}
+											/>
+										</div>
 									</div>
 								);
 							})}
